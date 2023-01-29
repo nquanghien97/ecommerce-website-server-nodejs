@@ -1,25 +1,27 @@
-import Shoes from '../models/shoes.js';
+import Product from '../models/products.js';
 import mongoose from 'mongoose';
 
-export function createShoes(req, res) {
-  const shoes = new Shoes({
+export function createProduct(req, res) {
+  const product = new Product({
     _id: mongoose.Types.ObjectId(),
     createdAt: req.body.createdAt,
     updatedAt: req.body.updatedAt,
     name: req.body.name,
-    avatar: req.body.avatar,
+    imageUrl: req.body.imageUrl,
     price: req.body.price,
     status: req.body.status,
     description: req.body.description,
+    gender: req.body.gender,
+    category: req.body.category,
   })
 
-  return shoes
+  return product
     .save()
-    .then((newShoes) => {
+    .then((newProduct) => {
       return res.status(201).json({
         success: true,
-        message: "A list of all Shoes",
-        shoes: newShoes,
+        message: "A list of all Product",
+        product: newProduct,
       });
     })
     .catch((err) => {
@@ -31,13 +33,13 @@ export function createShoes(req, res) {
     });
 }
 
-export function getAllShoes(req, res) {
-  Shoes.find()
-  .then((allShoes) => {
+export function getAllProducts(req, res) {
+  Product.find()
+  .then((allProducts) => {
     return res.status(200).json({
       success: true,
-      message: 'A list of all Shoes',
-      shoes: allShoes,
+      message: 'A list of all Products',
+      product: allProducts,
     });
   })
   .catch((err) => {
@@ -49,35 +51,35 @@ export function getAllShoes(req, res) {
   });
 }
 
-export function getShoes(req, res) {
-  const id = req.params.shoesId;
-  Shoes.findById(id)
-  .then((shoes) => {
+export function getProduct(req, res) {
+  const id = req.params.productId;
+  Product.findById(id)
+  .then((product) => {
     return res.status(200).json({
       success: true,
-      message: "get Shoes successfully",
-      shoes: shoes,
+      message: "get product successfully",
+      product: product,
     })
   })
   .catch((err) => {
     res.status(500).json({
       success: false,
-      message: "This shoes does not exist",
+      message: "This product does not exist",
       error: err.message,
     })
   });
 }
 
-export function updateShoes(req, res) {
-  const id = req.params.shoesId;
+export function updateProduct(req, res) {
+  const id = req.params.productId;
   const updateObject = req.body;
-  Shoes.updateOne({ _id: id }, { $set: updateObject })
+  Product.updateOne({ _id: id }, { $set: updateObject })
     .exec()
     .then(() => {
       res.status(200).json({
         success: true,
-        message: 'Shoes is updated',
-        updateShoes: updateObject,
+        message: 'Product is updated',
+        updateProduct: updateObject,
       });
     })
     .catch((err) => {
@@ -89,14 +91,14 @@ export function updateShoes(req, res) {
     });
 }
 
-export function deleteShoes(req, res) {
-  const id = req.params.shoesId;
-  Shoes.findByIdAndDelete(id)
+export function deleteProduct(req, res) {
+  const id = req.params.productId;
+  Product.findByIdAndDelete(id)
     .exec()
     .then(() => {
       res.status(200).json({
         success: true,
-        message: 'Shoes is deleted successfully',
+        message: 'Product is deleted successfully',
       });
     })
     .catch((err) => res.status(500).json({

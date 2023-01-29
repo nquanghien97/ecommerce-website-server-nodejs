@@ -7,7 +7,7 @@ const trendingSchema = new Schema({
     type: String,
     required: true,
   },
-  avatar: {
+  imageUrl: {
     type: String,
     required: true,
   },
@@ -17,4 +17,4 @@ const trendingSchema = new Schema({
   },
 }, { timestamps: true })
 
-export default mongoose.model('Trending', trendingSchema)
+export default mongoose.model('trending', trendingSchema)

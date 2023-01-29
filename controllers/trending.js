@@ -1,24 +1,22 @@
-import Clothes from '../models/clothes.js';
+import Trending from '../models/trending.js';
 import mongoose from 'mongoose';
 
-export function createClothes(req, res) {
-  const clothes = new Clothes({
+export function createTrending(req, res) {
+  const trending = new Trending({
     _id: mongoose.Types.ObjectId(),
     createdAt: req.body.createdAt,
     updatedAt: req.body.updatedAt,
     name: req.body.name,
-    avatar: req.body.avatar,
-    price: req.body.price,
+    imageUrl: req.body.imageUrl,
     description: req.body.description,
   })
-
-  return clothes
+  return trending
     .save()
-    .then((newClothes) => {
+    .then((newTrending) => {
       return res.status(201).json({
         success: true,
-        message: "A list of all Clothes",
-        clothes: newClothes,
+        message: "created successfully",
+        data: newTrending,
       });
     })
     .catch((err) => {
@@ -30,13 +28,13 @@ export function createClothes(req, res) {
     });
 }
 
-export function getAllClothes(req, res) {
-  Clothes.find()
-  .then((allClothes) => {
+export function getAllTrending(req, res) {
+  Trending.find()
+  .then((allProducts) => {
     return res.status(200).json({
       success: true,
-      message: 'A list of all Clothes',
-      clothes: allClothes,
+      message: 'A list of all Trending products',
+      data: allProducts,
     });
   })
   .catch((err) => {
@@ -48,35 +46,35 @@ export function getAllClothes(req, res) {
   });
 }
 
-export function getClothes(req, res) {
-  const id = req.params.ClothesId;
-  Clothes.findById(id)
-  .then((clothes) => {
+export function getTrending(req, res) {
+  const id = req.params.trendingId;
+  Trending.findById(id)
+  .then((product) => {
     return res.status(200).json({
       success: true,
-      message: "get Clothes successfully",
-      clothes: clothes,
+      message: "get Trending product successfully",
+      data: product,
     })
   })
   .catch((err) => {
     res.status(500).json({
       success: false,
-      message: "This clothes does not exist",
+      message: "This product does not exist",
       error: err.message,
     })
   });
 }
 
-export function updateClothes(req, res) {
-  const id = req.params.clothesId;
+export function updateTrending(req, res) {
+  const id = req.params.trendingId;
   const updateObject = req.body;
-  Clothes.updateOne({ _id: id }, { $set: updateObject })
+  Trending.updateOne({ _id: id }, { $set: updateObject })
     .exec()
     .then(() => {
       res.status(200).json({
         success: true,
-        message: 'Clothes is updated',
-        updateClothes: updateObject,
+        message: 'Product is updated',
+        updateProduct: updateObject,
       });
     })
     .catch((err) => {
@@ -88,14 +86,14 @@ export function updateClothes(req, res) {
     });
 }
 
-export function deleteClothes(req, res) {
-  const id = req.params.clothesId;
-  Clothes.findByIdAndDelete(id)
+export function deleteTrending(req, res) {
+  const id = req.params.trendingId;
+  Trending.findByIdAndDelete(id)
     .exec()
     .then(() => {
       res.status(200).json({
         success: true,
-        message: 'Clothes is deleted successfully',
+        message: 'Product is deleted successfully',
       });
     })
     .catch((err) => res.status(500).json({

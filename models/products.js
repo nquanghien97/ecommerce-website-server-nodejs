@@ -2,12 +2,12 @@ import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
-const shoesSchema = new Schema({
+const productSchema = new Schema({
   name: {
     type: String,
     required: true,
   },
-  avatar: {
+  imageUrl: {
     type: String,
     required: true,
   },
@@ -21,8 +21,18 @@ const shoesSchema = new Schema({
   },
   status: {
     type: String,
+    enum: ['new', 'old'],
     required: true,
   },
+  gender: {
+    type: String,
+    enum: ['all', 'male', 'female'],
+    required: true,
+  },
+  category: {
+    type: String,
+    enum: ['shoes', 'clothes']
+  }
 }, { timestamps: true })
 
-export default mongoose.model('Shoes', shoesSchema)
+export default mongoose.model('product', productSchema)

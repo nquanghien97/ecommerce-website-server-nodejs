@@ -6,7 +6,9 @@ import productRouter from './routes/products.js';
 import shoesRouter from './routes/category/shoes.js';
 import clothesRouter from './routes/category/clothes.js';
 import trendingRouter from './routes/trending.js';
-import searchProductRouter from './routes/searchProduct.js'
+import searchProductRouter from './routes/searchProduct.js';
+import maleRouter from './routes/filter/gender/male.js';
+import femaleRouter from './routes/filter/gender/female.js';
 
 
 const app = express();
@@ -20,7 +22,9 @@ app.use('/api/', productRouter);
 app.use('/api/', shoesRouter);
 app.use('/api/', clothesRouter);
 app.use('/api/', trendingRouter);
-app.use('/api/', searchProductRouter)
+app.use('/api/', searchProductRouter);
+app.use('/api/', maleRouter);
+app.use('/api/', femaleRouter);
 
 // set up mongoose
 mongoose.set("strictQuery", false);

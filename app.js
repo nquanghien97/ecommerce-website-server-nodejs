@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
-import { URI_DB } from './configs.js';
+import * as dotenv from 'dotenv';
 import productRouter from './routes/products.js';
 import shoesRouter from './routes/category/shoes.js';
 import clothesRouter from './routes/category/clothes.js';
@@ -9,10 +9,13 @@ import trendingRouter from './routes/trending.js';
 import searchProductRouter from './routes/searchProduct.js';
 import maleRouter from './routes/filter/gender/male.js';
 import femaleRouter from './routes/filter/gender/female.js';
+import registerRouter from './routes/auth/register.js';
+import loginRouter from './routes/auth/login.js';
 
 
 const app = express();
 const port = 5000;
+dotenv.config();
 
 app.use(cors());
 app.use(express.json());
@@ -26,10 +29,14 @@ app.use('/api/', searchProductRouter);
 app.use('/api/', maleRouter);
 app.use('/api/', femaleRouter);
 
+//auth
+app.use('/api/auth', registerRouter);
+app.use('/api/auth', loginRouter);
+
 // set up mongoose
 mongoose.set("strictQuery", false);
 
-mongoose.connect(URI_DB, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.r0wquqs.mongodb.net/?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(()=> {
     console.log('Database connected');
   })

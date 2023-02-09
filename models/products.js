@@ -9,7 +9,6 @@ const productSchema = new Schema({
   },
   imageUrl: {
     type: String,
-    required: true,
   },
   price: {
     type: String,
@@ -32,6 +31,9 @@ const productSchema = new Schema({
   category: {
     type: String,
     enum: ['shoes', 'clothes']
+  },
+  cloudinary_id: {
+    type: String,
   }
 }, { timestamps: true })
 

@@ -11,7 +11,7 @@ import maleRouter from './routes/filter/gender/male.js';
 import femaleRouter from './routes/filter/gender/female.js';
 import registerRouter from './routes/auth/register.js';
 import loginRouter from './routes/auth/login.js';
-
+import cartRouter from './routes/cart.js';
 
 const app = express();
 const port = 5000;
@@ -33,10 +33,16 @@ app.use('/api/', femaleRouter);
 app.use('/api/auth', registerRouter);
 app.use('/api/auth', loginRouter);
 
+//cart
+app.use('/api/', cartRouter);
+
 // set up mongoose
 mongoose.set("strictQuery", false);
 
-mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.r0wquqs.mongodb.net/?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.r0wquqs.mongodb.net/?retryWrites=true&w=majority`,{
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
   .then(()=> {
     console.log('Database connected');
   })

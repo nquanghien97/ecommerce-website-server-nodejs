@@ -1,15 +1,24 @@
 import Trending from '../models/trending.js';
 import mongoose from 'mongoose';
+import cloudinary from '../utils/cloudinary.js';
 
-export function createTrending(req, res) {
+export async function createTrending(req, res) {
+
+  const result = await cloudinary.v2.uploader.upload(req.file.path, {
+    folder: "ecommerce-website/trending",
+    use_filename: true,
+  })
+
   const trending = new Trending({
     _id: mongoose.Types.ObjectId(),
     createdAt: req.body.createdAt,
     updatedAt: req.body.updatedAt,
     name: req.body.name,
-    imageUrl: req.body.imageUrl,
+    imageUrl: result.secure_url,
     description: req.body.description,
+    cloudinary_id: result.public_id,
   })
+
   return trending
     .save()
     .then((newTrending) => {
@@ -65,40 +74,56 @@ export function getTrending(req, res) {
   });
 }
 
-export function updateTrending(req, res) {
+export async function updateTrending(req, res) {
   const id = req.params.trendingId;
   const updateObject = req.body;
-  Trending.updateOne({ _id: id }, { $set: updateObject })
-    .exec()
-    .then(() => {
-      res.status(200).json({
-        success: true,
-        message: 'Product is updated',
-        updateProduct: updateObject,
+  try {
+    let product = await Trending.findById(id);
+    let result
+    if (req.file) {
+      await cloudinary.v2.uploader.destroy(product.cloudinary_id);
+      result = await cloudinary.v2.uploader.upload(req.file.path, {
+        folder: "ecommerce-website/trending",
+        use_filename: true,
       });
-    })
-    .catch((err) => {
-      res.status(500).json({
-        success: false,
-        message: 'Server error. Please try again.',
-        error: err.message,
-      });
+    }
+    const data = {
+      ...updateObject,
+      imageUrl: result?.secure_url || product.imageUrl,
+      cloudinary_id: result?.public_id || product.cloudinary_id
+    }
+    console.log(req.file)
+    product = await Trending.findByIdAndUpdate(id, data, { new: true });
+    res.status(200).json({
+      success: true,
+      message: 'Product is updated',
+      updateProduct: product,
     });
-}
-
-export function deleteTrending(req, res) {
-  const id = req.params.trendingId;
-  Trending.findByIdAndDelete(id)
-    .exec()
-    .then(() => {
-      res.status(200).json({
-        success: true,
-        message: 'Product is deleted successfully',
-      });
-    })
-    .catch((err) => res.status(500).json({
+  }
+  catch(err) {
+    res.status(500).json({
       success: false,
       message: 'Server error. Please try again.',
       error: err.message,
-    }));
+    });
+  }
+}
+
+export async function deleteTrending(req, res) {
+  const id = req.params.trendingId;
+  try {
+    const product = await Trending.findById(id);
+    await cloudinary.v2.uploader.destroy(product.cloudinary_id)
+    await product.remove();
+    res.status(200).json({
+      success: true,
+      message: 'Product is deleted successfully',
+    });
+  } catch (err) {
+      res.status(500).json({
+      success: false,
+      message: 'Server error. Please try again.',
+      error: err.message,
+    })
+  }
 }

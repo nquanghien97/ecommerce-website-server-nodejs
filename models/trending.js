@@ -9,12 +9,14 @@ const trendingSchema = new Schema({
   },
   imageUrl: {
     type: String,
-    required: true,
   },
   description: {
     type: String,
     required: true,
   },
+  cloudinary_id: {
+    type: String,
+  }
 }, { timestamps: true })
 
 export default mongoose.model('trending', trendingSchema)

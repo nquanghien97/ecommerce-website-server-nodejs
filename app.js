@@ -13,6 +13,7 @@ import registerRouter from './routes/auth/register.js';
 import loginRouter from './routes/auth/login.js';
 import cartRouter from './routes/cart.js';
 import paginateRouter from './routes/pagination.js';
+import suggestionsRouter from './routes/suggestionsProducts.js'
 
 const app = express();
 const port = 5000;
@@ -39,6 +40,9 @@ app.use('/api/', cartRouter);
 
 //pagination
 app.use('/api/', paginateRouter);
+
+//suggestions
+app.use('/api/', suggestionsRouter);
 
 // set up mongoose
 mongoose.set("strictQuery", false);

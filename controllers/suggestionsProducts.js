@@ -1,8 +1,9 @@
 import Product from '../models/products.js';
 
-export function searchProduct(req, res) {
+export function suggestionsProducts(req, res) {
   const searchName = new RegExp(req.query.name, 'i');
   Product.find({name: searchName})
+  .limit(4)
   .then((data) => {
     return res.status(200).json({
       success: true,

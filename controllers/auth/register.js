@@ -36,7 +36,8 @@ export async function registerUser(req, res) {
       success: true,
       message: "User created successfully",
       accessToken,
-      fullName: newUser.fullName
+      fullName: newUser.fullName,
+      userId: newUser._id
     })
   } catch(err) {
       res.status(500).json({

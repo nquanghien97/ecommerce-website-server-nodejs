@@ -36,6 +36,7 @@ const cartSchema = new Schema({
   subTotal: {
     default: 0,
     type: Number,
+    required: true,
   },
 }, { timestamps: true })
 

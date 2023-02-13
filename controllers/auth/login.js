@@ -37,6 +37,7 @@ export async function loginUser(req, res) {
       message: "Login successfully",
       fullName: user.fullName,
       role: user.role,
+      userId: user._id,
       accessToken
     })
 

@@ -16,7 +16,7 @@ export async function addCart(req, res) {
       if (itemIndex > -1) {
         //product exists in the cart, update the quantity
         let productItem = cart.products[itemIndex];
-        productItem.quantity += quantity;
+        productItem.quantity = quantity;
         cart.products[itemIndex] = productItem;
         productItem.total = productItem.quantity * productItem.price;
         cart.subTotal = cart.products.reduce((acc, cur) => acc + cur.total, 0)

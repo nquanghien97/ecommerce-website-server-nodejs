@@ -10,7 +10,7 @@ const ItemSchema = new Schema(
     },
     quantity: {
       type: Number,
-      required: true,
+      default: 1,
       min: [1, "Quantity can not be less then 1."],
     },
     price: {

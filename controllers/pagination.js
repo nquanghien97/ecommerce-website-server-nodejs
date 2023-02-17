@@ -1,12 +1,12 @@
 import Product from '../models/products.js';
 
 export function paginationProduct (req, res, next) {
-  const perPage = 5;
   const page = req.query.page || 1;
+  const limit = req.query.limit || 5;
 
   Product.find()
-    .skip((perPage * page) - perPage)
-    .limit(perPage)
+    .skip((limit * page) - limit)
+    .limit(limit)
     .exec((_err, products) => {
       Product.countDocuments((err, count) => {
         if (err)
@@ -15,7 +15,7 @@ export function paginationProduct (req, res, next) {
           success: true,
           message: "get product successfully",
           product: products,
-          totalPages: Math.ceil(count / perPage)
+          totalPages: Math.ceil(count / limit)
         });
       });
     });

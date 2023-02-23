@@ -13,7 +13,8 @@ import registerRouter from './routes/auth/register.js';
 import loginRouter from './routes/auth/login.js';
 import cartRouter from './routes/cart.js';
 import paginateRouter from './routes/pagination.js';
-import suggestionsRouter from './routes/suggestionsProducts.js'
+import suggestionsRouter from './routes/suggestionsProducts.js';
+import wishListRouter from './routes/wishList.js';
 
 const app = express();
 const port = 5000;
@@ -37,6 +38,9 @@ app.use('/api/auth', loginRouter);
 
 //cart
 app.use('/api/', cartRouter);
+
+//wishList
+app.use('/api/', wishListRouter);
 
 //pagination
 app.use('/api/', paginateRouter);

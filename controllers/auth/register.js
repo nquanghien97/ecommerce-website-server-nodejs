@@ -3,12 +3,12 @@ import argon2 from 'argon2';
 import jwt from 'jsonwebtoken';
 
 export async function registerUser(req, res) {
-  const {username, password, fullName} = req.body;
+  const {email, password, fullName} = req.body;
 
-  if (!username || !password) {
+  if (!email || !password || !fullName) {
     return res.status(400).json({
       success: false,
-      message: "Missing username or password"
+      message: "Missing email or password or fullName"
     })
   }
   if(!fullName) {
@@ -18,7 +18,7 @@ export async function registerUser(req, res) {
     })
   }
   try {
-    const user = await User.findOne({username: username});
+    const user = await User.findOne({email: email});
     if(user) {
       return res.status(400).json({
         success: false,
@@ -26,7 +26,7 @@ export async function registerUser(req, res) {
       })
     }
     const hashedPassword = await argon2.hash(password);
-    const newUser = new User({username, password: hashedPassword, fullName});
+    const newUser = new User({email, password: hashedPassword, fullName});
     await newUser.save();
 
     //return token

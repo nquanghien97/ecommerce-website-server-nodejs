@@ -3,29 +3,29 @@ import argon2 from 'argon2';
 import jwt from 'jsonwebtoken';
 
 export async function loginUser(req, res) {
-  const {username, password} = req.body;
+  const {email, password} = req.body;
 
-  if (!username || !password) {
+  if (!email || !password) {
     return res.status(400).json({
       success: false,
-      message: "Missing username or password"
+      message: "Missing email or password"
     })
   }
   try {
-    const user = await User.findOne({username});
+    const user = await User.findOne({email});
     if(!user) {
       return res.status(400).json({
         success: false,
-        message: "Incorrect username or password"
+        message: "Incorrect email or password"
       });
     }
     
-    //username found
+    //email found
     const passwordValidated = await argon2.verify(user.password, password)
     if(!passwordValidated) {
       return res.status(400).json({
         success: false,
-        message: "Incorrect username or password"
+        message: "Incorrect email or password"
       });
     }
 

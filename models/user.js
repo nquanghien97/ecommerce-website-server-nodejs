@@ -15,6 +15,12 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  imageUrl: {
+    type: String,
+  },
+  cloudinary_id: {
+    type: String,
+  },
   role: {
     type: String,
     enum: ['admin', 'client'],

@@ -92,7 +92,6 @@ export async function updateTrending(req, res) {
       imageUrl: result?.secure_url || product.imageUrl,
       cloudinary_id: result?.public_id || product.cloudinary_id
     }
-    console.log(req.file)
     product = await Trending.findByIdAndUpdate(id, data, { new: true });
     res.status(200).json({
       success: true,

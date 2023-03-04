@@ -15,6 +15,7 @@ import cartRouter from './routes/cart.js';
 import paginateRouter from './routes/pagination.js';
 import suggestionsRouter from './routes/suggestionsProducts.js';
 import wishListRouter from './routes/wishList.js';
+import userRouter from './routes/user.js';
 
 const app = express();
 const port = 5000;
@@ -44,6 +45,9 @@ app.use('/api/', wishListRouter);
 
 //pagination
 app.use('/api/', paginateRouter);
+
+//user
+app.use('/api/', userRouter)
 
 //suggestions
 app.use('/api/', suggestionsRouter);

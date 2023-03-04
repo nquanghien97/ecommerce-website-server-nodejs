@@ -96,7 +96,6 @@ export async function updateProduct(req, res) {
       imageUrl: result?.secure_url || product.imageUrl,
       cloudinary_id: result?.public_id || product.cloudinary_id
     }
-    console.log(req.file)
     product = await Product.findByIdAndUpdate(id, data, { new: true });
     res.status(200).json({
       success: true,

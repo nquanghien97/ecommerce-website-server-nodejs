@@ -71,8 +71,9 @@ export async function updateCart(req, res) {
         cart.subTotal = cart.products.reduce((sum, product) => sum + product.total, 0);
       }
     }
-        
-    const newCart = await Cart.findOneAndUpdate(userId, cart, { new: true });
+
+    const newCart = await Cart.findOneAndUpdate({userId}, cart, { new: true });
+    console.log(cart)
     return res.status(200).json({
       success: true,
       message: 'list of Cart',

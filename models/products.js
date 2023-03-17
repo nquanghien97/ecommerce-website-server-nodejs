@@ -26,7 +26,13 @@ const productSchema = new Schema({
   gender: {
     type: String,
     enum: ['all', 'male', 'female'],
+    default: 'all',
     required: true,
+  },
+  type: {
+    type: String,
+    enum: ['children', 'sport', 'none'],
+    default: 'none',
   },
   category: {
     type: String,

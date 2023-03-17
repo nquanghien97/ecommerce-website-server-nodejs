@@ -1,4 +1,4 @@
-import Product from '../../../models/products.js';
+import Product from '../../models/products.js';
 
 export function getSportProducts(req, res) {
   Product.find({type: "sport"})

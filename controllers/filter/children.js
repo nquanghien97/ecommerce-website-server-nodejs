@@ -1,4 +1,4 @@
-import Product from '../../../models/products.js';
+import Product from '../../models/products.js';
 
 export function getChildrenProducts(req, res) {
   Product.find({type: "children"})

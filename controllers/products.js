@@ -19,6 +19,7 @@ export async function createProduct(req, res) {
     status: req.body.status,
     description: req.body.description,
     gender: req.body.gender,
+    type: req.body.type,
     category: req.body.category,
     cloudinary_id: result.public_id,
   })

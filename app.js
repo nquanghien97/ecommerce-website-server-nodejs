@@ -9,6 +9,8 @@ import trendingRouter from './routes/trending.js';
 import searchProductRouter from './routes/searchProduct.js';
 import maleRouter from './routes/filter/gender/male.js';
 import femaleRouter from './routes/filter/gender/female.js';
+import childrenRouter from './routes/filter/children.js';
+import sportRouter from './routes/filter/sport.js';
 import registerRouter from './routes/auth/register.js';
 import loginRouter from './routes/auth/login.js';
 import cartRouter from './routes/cart.js';
@@ -32,6 +34,8 @@ app.use('/api/', trendingRouter);
 app.use('/api/', searchProductRouter);
 app.use('/api/', maleRouter);
 app.use('/api/', femaleRouter);
+app.use('/api/', childrenRouter);
+app.use('/api/', sportRouter);
 
 //auth
 app.use('/api/auth', registerRouter);

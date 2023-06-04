@@ -18,6 +18,10 @@ const productSchema = new Schema({
     type: String,
     required: true,
   },
+  detail: {
+    type: String,
+    required: true,
+  },
   status: {
     type: String,
     enum: ['new', 'old'],

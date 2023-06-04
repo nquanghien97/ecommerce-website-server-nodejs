@@ -18,6 +18,7 @@ export async function createProduct(req, res) {
     price: req.body.price,
     status: req.body.status,
     description: req.body.description,
+    detail: req.body.detail,
     gender: req.body.gender,
     type: req.body.type,
     category: req.body.category,

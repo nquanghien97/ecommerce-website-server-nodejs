@@ -2,7 +2,7 @@ import User from '../models/user.js';
 import cloudinary from '../utils/cloudinary.js';
 
 export async function getUser(req, res) {
-  const { userId } = req.body;
+  const userId = req.userId || '';
   try{
     const user = await User.findById(userId);
     if(!user) {
@@ -26,8 +26,8 @@ export async function getUser(req, res) {
 }
 
 export async function updateUser(req, res) {
-  const {userId, ...updateObject}  = req.body;
-  // const userId = req.params.userId;
+  const {...updateObject}  = req.body;
+  const userId = req.userId || '';
   try {
     const user = await User.findById(userId);
     let result
